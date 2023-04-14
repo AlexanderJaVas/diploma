@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+<h1>Корзина товаров</h1>
+<hr>
+<form th:method="get" th:action="@{/personal_account}">
+    <input type="submit" value="Назад в личный кабинет покупателя">
+</form>
+<div th:each="item : ${cart_item}">
+    <img th:src="'/img/' + ${item.imageList[0].getFileName()}" width="300px">
+    <br>
+    <a th:href="@{/personal_account/item/info/{id}(id=${item.getId()})}" th:text="${item.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${item.getPrice()}"></p>
+    <form th:method="get" th:action="@{/cart/delete/{id}(id=${item.getId()})}">
+        <input type="submit" value="Удалить товар из корзины">
+    </form>
+    <hr>
+</div>
+<h3 th:text="'Итоговая цена: ' + ${price}"></h3>
+<br>
+<form th:method="get" th:action="@{/order/create}">
+    <input type="submit" value="Оформить заказ">
+</form>
+</body>
+</html>

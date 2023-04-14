@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет администратора</title>
+</head>
+<body>
+<h1>Личный кабинет администратора</h1>
+<hr>
+<form method="get" action="/admin/item/add">
+    <button type="submit">Добавить товар</button>
+</form>
+<br>
+<br>
+<form method="get" action="/admin/users_info">
+    <button type="submit">Список пользователей</button>
+</form>
+<br>
+<br>
+<form method="get" action="/admin/orders_info">
+    <button type="submit">Список заказов</button>
+</form>
+<br>
+<br>
+<form method="post" action="/logout">
+    <button type="submit">Выйти из личного кабинета администратора</button>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+</form>
+<hr>
+<h3>Список товаров</h3>
+<div th:each="item : ${items}">
+    <p th:text="'Наименование: ' + ${item.getTitle()}"></p>
+    <p th:text="'Описание: ' + ${item.getDescription()}"></p>
+    <p th:text="'Цена: ' + ${item.getPrice()}"></p>
+    <p th:text="'Cклад: ' + ${item.getWarehouse()}"></p>
+    <p th:text="'Продавец: ' + ${item.getSeller()}"></p>
+    <p th:text="'Категория: ' + ${item.getCategory().getName()}"></p>
+    <br>
+    <img th:src="'/img/' + ${item.imageList[0].getFileName()}" width="300px">
+    <br>
+    <form th:action="@{/admin/item/edit/{id}(id=${item.getId()})}">
+        <input type="submit" value="Редактирование товара">
+    </form>
+    <br>
+    <br>
+    <form th:action="@{/admin/item/delete/{id}(id=${item.getId()})}">
+        <input type="submit" value="Удаление товара">
+    </form>
+    <hr>
+</div>
+</body>
+</html>

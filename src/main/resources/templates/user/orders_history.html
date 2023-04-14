@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>История заказов</title>
+</head>
+<body>
+<h1>История заказов</h1>
+<hr>
+<form th:method="get" th:action="@{/personal_account}">
+  <input type="submit" value="Назад в личный кабинет покупателя">
+</form>
+<div th:each="order : ${orders}">
+  <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
+  <img th:src="'/img/' + ${order.getItem().getImageList()[0].getFileName()}" width="300px">
+  <p th:text="'Наименование: ' + ${order.getItem().getTitle()}">
+  <p th:text="'Количество: ' + ${order.getCount()}">
+  <p th:text="'Цена: ' + ${order.getPrice()}">
+  <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+  <p th:text="'Cтатус: ' + ${order.getOrderStatus()}">
+  <hr style="color: limegreen">
+</div>
+</body>
+</html>

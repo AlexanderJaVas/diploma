@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ошибка при удалении товара</title>
+</head>
+<body>
+<h3>Невозможно удалить данный товар, поскольку он лежит либо в корзине, либо в заказе</h3>
+<form th:method="get" th:action="@{/admin}">
+    <input type="submit" value="Назад в личный кабинет администратора">
+</form>
+</body>
+</html>

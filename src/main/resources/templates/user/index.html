@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет покупателя</title>
+</head>
+<body>
+<h1>Личный кабинет покупателя</h1>
+<hr>
+<form method="post" action="/logout">
+    <button type="submit">Выйти из личного кабинета</button>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+</form>
+<br>
+<form method="get" th:action="@{/cart}">
+    <input type="submit" value="Моя корзина">
+</form>
+<br>
+<form method="get" th:action="@{/orders}">
+    <input type="submit" value="Активные заказы">
+</form>
+<form method="get" th:action="@{/orders/history}">
+    <input type="submit" value="История заказов">
+</form>
+<h3>Сортировка, поиск, фильтрация</h3>
+<form th:method="POST" th:action="@{/personal_account/item/search}">
+    <fieldset>
+        <legend>Выберите параметры для сортировки, поиска, фильтрации:</legend>
+        <label for="search">Поиск по наименованию</label>
+        <input type="text" id="search" name="search" th:value="*{value_search}">
+        <br>
+        <p>Цена, P</p>
+        <label for="from">От</label>
+        <input type="text" name="from" id="from" th:value="*{value_price_from}">
+        <label for="to">До</label>
+        <input type="text" name="to" id="to" th:value="*{value_price_to}">
+        <br>
+        <br>
+        <div>
+            <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+            <label for="ascending_price">Отсортировать по возрастанию цены</label>
+            <input type="radio" id="descending_price" name="price"
+                   value="sorted_by_descending_price">
+            <label for="descending_price">Отсортировать по убыванию цены</label>
+            <p>Категория товаров: </p>
+            <input type="radio" id="autoParts" name="contract" value="autoParts">
+            <label for="autoParts">Автозапчасти</label>
+            <input type="radio" id="appliances" name="contract" value="appliances">
+            <label for="appliances">Бытовая техника</label>
+            <input type="radio" id="toys" name="contract" value="toys">
+            <label for="toys">Игрушки</label>
+            <input type="radio" id="petSupplies" name="contract" value="petSupplies">
+            <label for="petSupplies">Зоотовары</label>
+            <br>
+            <br>
+            <input type="submit" value="Найти">
+        </div>
+    </fieldset>
+</form>
+<hr>
+<h3>Результат поиска, сортировки, фильтрации</h3>
+<div th:each="item : ${search_item}">
+    <img th:src="'/img/' + ${item.imageList[0].getFileName()}" width="300px">
+    <br>
+    <a th:href="@{/item/info/{id}(id=${item.getId()})}" th:text="${item.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${item.getPrice()}"></p>
+    <hr>
+</div>
+<hr>
+<h3>Доступные товары: </h3>
+<div th:each="item : ${items}">
+    <img th:src="'/img/' + ${item.imageList[0].getFileName()}" width="300px">
+    <br>
+    <a th:href="@{/personal_account/item/info/{id}(id=${item.getId()})}" th:text="${item.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${item.getPrice()}"></p>
+    <form th:method="get" th:action="@{/cart/add/{id}(id=${item.getId()})}">
+        <input type="submit" value="Добавить товар в корзину">
+    </form>
+    <hr style="color: blue">
+</div>
+</body>
+</html>

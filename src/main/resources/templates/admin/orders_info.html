@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Список заказов</title>
+</head>
+<body>
+<h1>Список заказов</h1>
+<hr>
+<form th:method="get" th:action="@{/admin}">
+    <input type="submit" value="Назад в личный кабинет администратора">
+</form>
+<h3>Поиск заказов</h3>
+<form th:method="POST" th:action="@{/admin/order/search}" th:value="${search}">
+    <label for="search">Введите последние 4 буквы/цифры номера заказа</label>
+    <input type="text" id="search" name="search">
+    <div th:if="${error}" style="color: red">Введите 4 буквы и/или цифры</div>
+    <br>
+    <input type="submit" value="Найти">
+</form>
+<hr>
+<h3>Результат поиска</h3>
+<div th:each="search_order : ${search_order}">
+    <h4 th:text="'Заказ №' + ${search_order.getNumber()}"></h4>
+    <img th:src="'/img/' + ${search_order.getItem().getImageList()[0].getFileName()}" width="300px">
+    <p th:text="'Наименование: ' + ${search_order.getItem().getTitle()}">
+    <p th:text="'Количество: ' + ${search_order.getCount()}">
+    <p th:text="'Цена: ' + ${search_order.getPrice()}">
+    <p th:text="'Дата заказа: ' + ${#temporals.format(search_order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+    <p th:text="'Cтатус: ' + ${search_order.getOrderStatus()}">
+    <hr>
+</div>
+<hr>
+<h3>Список всех заказов</h3>
+<br>
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th>Номер заказа</th>
+        <th>Статус заказа</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order: ${orders}">
+        <td><a th:href="@{/admin/orders/info/{id}(id=${order.getId()})}" th:text="${order.getNumber()}"></a></td>
+        <td th:text="${order.getOrderStatus()}"></td>
+        <td>
+            <form th:method="post" th:action="@{/admin/edit_order_status/{id}(id=${order.getId()})}">
+                <label for="orderStatus">Новый статус заказа</label>
+                <select name="orderStatus" id="orderStatus">
+                    <option th:each="orderStatusOpt : ${T(com.example.coursework.enums.OrderStatus).values}"
+                            th:value="${orderStatusOpt}"
+                            th:text="${orderStatusOpt}"></option>
+                </select>
+                <input type="submit" value="Изменить статус заказа">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+
+
