@@ -52,7 +52,7 @@
             <form th:method="post" th:action="@{/admin/edit_order_status/{id}(id=${order.getId()})}">
                 <label for="orderStatus">Новый статус заказа</label>
                 <select name="orderStatus" id="orderStatus">
-                    <option th:each="orderStatusOpt : ${T(com.example.coursework.enums.OrderStatus).values}"
+                    <option th:each="orderStatusOpt : ${T(com.example.diploma.enums.OrderStatus).values}"
                             th:value="${orderStatusOpt}"
                             th:text="${orderStatusOpt}"></option>
                 </select>
