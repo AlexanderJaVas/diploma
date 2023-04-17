@@ -28,7 +28,7 @@
     <p th:text="'Наименование: ' + ${search_order.getItem().getTitle()}">
     <p th:text="'Количество: ' + ${search_order.getCount()}">
     <p th:text="'Цена: ' + ${search_order.getPrice()}">
-    <p th:text="'Дата заказа: ' + ${#temporals.format(search_order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+    <p th:text="'Дата заказа: ' + ${#temporals.format(search_order.getDateTime(), 'dd-MM-yyyy')}"></p>
     <p th:text="'Cтатус: ' + ${search_order.getOrderStatus()}">
     <hr>
 </div>
