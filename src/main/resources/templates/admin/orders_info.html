@@ -59,6 +59,11 @@
                 <input type="submit" value="Изменить статус заказа">
             </form>
         </td>
+        <td>
+            <form th:action="@{/admin/order/delete/{id}(id=${order.getId()})}">
+                <input type="submit" value="Удалить заказ">
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

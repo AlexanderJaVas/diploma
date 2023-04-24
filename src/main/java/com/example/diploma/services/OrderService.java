@@ -66,4 +66,9 @@ public class OrderService {
     public List<Order> getOrdersHistoryByPerson(Person person) {
         return orderRepository.getOrdersHistoryByPerson(person);
     }
+
+    @Transactional
+    public void deleteOrder(int id) {
+        orderRepository.deleteById(id);
+    }
 }

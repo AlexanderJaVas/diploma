@@ -62,8 +62,11 @@
 <div th:each="item : ${search_item}">
     <img th:src="'/img/' + ${item.imageList[0].getFileName()}" width="300px">
     <br>
-    <a th:href="@{/item/info/{id}(id=${item.getId()})}" th:text="${item.getTitle()}"></a>
+    <a th:href="@{/personal_account/item/info/{id}(id=${item.getId()})}" th:text="${item.getTitle()}"></a>
     <p th:text="'Цена: ' + ${item.getPrice()}"></p>
+    <form th:method="get" th:action="@{/cart/add/{id}(id=${item.getId()})}">
+        <input type="submit" value="Добавить товар в корзину">
+    </form>
     <hr>
 </div>
 <hr>

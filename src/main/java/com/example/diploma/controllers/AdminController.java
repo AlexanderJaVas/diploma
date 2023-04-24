@@ -152,6 +152,12 @@ public class AdminController {
         return "redirect:/admin/orders_info";
     }
 
+    @GetMapping("/order/delete/{id}")
+    public String deleteOrder(@PathVariable("id") int id) {
+        orderService.deleteOrder(id);
+        return "redirect:/admin/orders_info";
+    }
+
     @PostMapping("/order/search")
     public String orderSearch(@RequestParam("search") String search, Model model) {
         model.addAttribute("orders", orderService.getAllOrders());
